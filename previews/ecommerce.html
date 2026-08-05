@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Interactive Preview</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-slate-100 font-sans min-h-screen pb-12">
+
+  <header class="border-b border-slate-800 bg-gray-900/80 backdrop-blur-md sticky top-0 z-20">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#" class="font-extrabold text-lg text-white tracking-wider">LUXE<span class="text-emerald-500">.</span></a>
+
+      <button onclick="toggleCart()" class="relative bg-slate-800 hover:bg-slate-700 text-white text-xs px-4 py-2 rounded-xl font-semibold transition flex items-center space-x-2">
+        <span>🛒 Cart</span>
+        <span id="cart-badge" class="bg-emerald-500 text-slate-950 text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="max-w-6xl mx-auto px-6 py-12 text-center space-y-4">
+    <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full font-semibold">New Summer Drops</span>
+    <h1 class="text-3xl md:text-5xl font-black text-white">Modern Luxury Collection</h1>
+    <p class="text-slate-400 text-xs md:text-sm max-w-md mx-auto">Explore high-end minimalist wearables engineered for daily life.</p>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 pb-8 flex justify-center space-x-2">
+    <button id="cat-all" onclick="filterCategory('all')" class="px-4 py-1.5 text-xs rounded-xl font-semibold bg-emerald-600 text-white">All Products</button>
+    <button id="cat-audio" onclick="filterCategory('audio')" class="px-4 py-1.5 text-xs rounded-xl font-semibold text-slate-400 bg-gray-900 hover:text-white">Audio</button>
+    <button id="cat-wearables" onclick="filterCategory('wearables')" class="px-4 py-1.5 text-xs rounded-xl font-semibold text-slate-400 bg-gray-900 hover:text-white">Wearables</button>
+  </section>
+
+  <main class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6" id="product-grid">
+    </main>
+
+  <div id="cart-drawer" class="fixed inset-y-0 right-0 w-80 bg-gray-900 border-l border-slate-800 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col p-6 space-y-6">
+    <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+      <h3 class="font-bold text-white text-base">Your Cart</h3>
+      <button onclick="toggleCart()" class="text-slate-400 hover:text-white">✕</button>
+    </div>
+
+    <div id="cart-items" class="flex-1 overflow-y-auto space-y-3">
+      <p id="empty-msg" class="text-xs text-slate-500 text-center py-8">Your cart is currently empty.</p>
+    </div>
+
+    <div class="border-t border-slate-800 pt-4 space-y-3">
+      <div class="flex justify-between text-sm font-bold text-white">
+        <span>Total:</span>
+        <span id="cart-total">$0</span>
+      </div>
+      <button onclick="checkout()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-3 rounded-xl transition shadow-lg shadow-emerald-600/20">
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 border border-slate-800 text-white text-xs px-4 py-3 rounded-xl shadow-2xl hidden z-50"></div>
+
+  <script>
+    const products = [
+      { id: 1, title: "Acoustic Pro Headphones", category: "audio", price: 199, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" },
+      { id: 2, title: "Minimalist Smartwatch", category: "wearables", price: 249, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" },
+      { id: 3, title: "Wireless Studio Earbuds", category: "audio", price: 129, image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" }
+    ];
+
+    let cart = [];
+
+    function renderProducts(items) {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = items.map(p => `
+        <div class="bg-gray-900 border border-slate-800 rounded-2xl p-4 space-y-3 hover:border-slate-700 transition">
+          <img src="${p.image}" class="w-full h-44 object-cover rounded-xl border border-slate-800">
+          <div class="flex justify-between items-center">
+            <h3 class="font-bold text-white text-sm">${p.title}</h3>             <span class="text-xs font-bold text-emerald-400">$${p.price}</span>
+          </div>
+          <button onclick="addToCart(${p.id})" class="w-full bg-slate-800 hover:bg-emerald-600 text-white text-xs py-2 rounded-lg font-semibold transition">
+            Add to Cart +
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function filterCategory(cat) {
+      ['all', 'audio', 'wearables'].forEach(c => {
+        const btn = document.getElementById(`cat-${c}`);
+        btn.className = c === cat 
+          ? "px-4 py-1.5 text-xs rounded-xl font-semibold bg-emerald-600 text-white" 
+          : "px-4 py-1.5 text-xs rounded-xl font-semibold text-slate-400 bg-gray-900 hover:text-white";
+      });
+
+      renderProducts(cat === 'all' ? products : products.filter(p => p.category === cat));
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      cart.push(product);
+      updateCartUI();
+      showToast(`Added ${product.title} to cart!`);
+    }
+
+    function updateCartUI() {
+      document.getElementById('cart-badge').textContent = cart.length;
+      const container = document.getElementById('cart-items');
+      const emptyMsg = document.getElementById('empty-msg');
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-500 text-center py-8">Your cart is currently empty.</p>`;
+        document.getElementById('cart-total').textContent = `$0`;
+        return;
+      }
+
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      document.getElementById('cart-total').textContent = `$${total}`;
+
+      container.innerHTML = cart.map((item, index) => `
+        <div class="flex justify-between items-center bg-gray-950 p-3 rounded-xl border border-slate-800 text-xs">
+          <div>
+            <p class="font-bold text-white">${item.title}</p>             <p class="text-emerald-400">$${item.price}</p>
+          </div>
+          <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 font-bold">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function toggleCart() {
+      document.getElementById('cart-drawer').classList.toggle('translate-x-full');
+    }
+
+    function checkout() {
+      if (cart.length === 0) return showToast('Cart is empty!');
+      cart = [];
+      updateCartUI();
+      toggleCart();
+      showToast('Order placed successfully! Thank you.');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2500);
+    }
+
+    renderProducts(products);
+  </script>
+</body>
+</html>
