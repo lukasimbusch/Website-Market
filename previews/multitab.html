@@ -1,164 +1,200 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multi-Tab Web Application Preview</title>
+  <title>NexusPortal — Console</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#F7F5EF;
+      --panel:#FFFFFF;
+      --ink:#1B1F1C;
+      --sub:#6B7168;
+      --teal:#0E7C66;
+      --rust:#C1542C;
+      --line:#E4E0D4;
+    }
+    body{ background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; }
+    .font-display{ font-family:'Space Grotesk', sans-serif; }
+    .font-mono{ font-family:'IBM Plex Mono', monospace; }
+    .panel{ background:var(--panel); border:1px solid var(--line); }
+    .status-dot{ animation:pulse 2s infinite; }
+    @keyframes pulse{
+      0%{ box-shadow:0 0 0 0 rgba(14,124,102,0.4); }
+      70%{ box-shadow:0 0 0 5px rgba(14,124,102,0); }
+      100%{ box-shadow:0 0 0 0 rgba(14,124,102,0); }
+    }
+  </style>
 </head>
-<body class="bg-gray-950 text-slate-100 font-sans min-h-screen">
+<body class="min-h-screen">
 
-  <header class="border-b border-slate-800 bg-gray-900/80 backdrop-blur-md sticky top-0 z-20">
-    <div class="max-w-5xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-      
-      <div class="flex items-center space-x-2">
-        <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-purple-500/30">⚡</div>
-        <span class="font-extrabold text-lg text-white">NexusPortal</span>
+  <div class="max-w-6xl mx-auto md:flex">
+
+    <!-- Sidebar -->
+    <aside class="md:w-56 shrink-0 border-b md:border-b-0 md:border-r px-5 py-6 md:min-h-screen" style="border-color:var(--line)">
+      <div class="flex items-center space-x-2 mb-8">
+        <div class="w-7 h-7 rounded flex items-center justify-center font-mono text-xs font-bold text-white" style="background:var(--teal)">N</div>
+        <span class="font-display font-bold text-base">NexusPortal</span>
       </div>
 
-      <nav class="flex space-x-2 bg-gray-950 p-1.5 rounded-xl border border-slate-800">
-        <button id="tab-btn-dashboard" onclick="switchTab('dashboard')" class="px-4 py-1.5 text-xs font-semibold rounded-lg bg-purple-600 text-white transition">
-          📊 Dashboard
+      <p class="font-mono text-[10px] uppercase tracking-widest mb-2" style="color:var(--sub)">Workspace</p>
+      <nav class="flex md:flex-col gap-1 overflow-x-auto md:overflow-visible">
+        <button id="tab-btn-dashboard" onclick="switchTab('dashboard')" class="text-left px-3 py-2 text-xs font-medium rounded whitespace-nowrap" style="background:var(--teal); color:white;">
+          ▤ Dashboard
         </button>
-        <button id="tab-btn-analytics" onclick="switchTab('analytics')" class="px-4 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">
-          📈 Analytics
+        <button id="tab-btn-analytics" onclick="switchTab('analytics')" class="text-left px-3 py-2 text-xs font-medium rounded whitespace-nowrap" style="color:var(--sub)">
+          ◈ Analytics
         </button>
-        <button id="tab-btn-team" onclick="switchTab('team')" class="px-4 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">
-          👥 Team
+        <button id="tab-btn-team" onclick="switchTab('team')" class="text-left px-3 py-2 text-xs font-medium rounded whitespace-nowrap" style="color:var(--sub)">
+          ◉ Team
         </button>
-        <button id="tab-btn-settings" onclick="switchTab('settings')" class="px-4 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">
-          ⚙️ Settings
+        <button id="tab-btn-settings" onclick="switchTab('settings')" class="text-left px-3 py-2 text-xs font-medium rounded whitespace-nowrap" style="color:var(--sub)">
+          ⚙ Settings
         </button>
       </nav>
 
-    </div>
-  </header>
-
-  <main id="tab-dashboard" class="max-w-5xl mx-auto px-6 py-10 space-y-6">
-    <div class="border-b border-slate-800 pb-4">
-      <h1 class="text-2xl font-bold text-white">Project Dashboard</h1>
-      <p class="text-xs text-slate-400 mt-1">Overview of your active workspace and deployments</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-gray-900 border border-slate-800 p-5 rounded-2xl space-y-2">
-        <span class="text-xs text-slate-400 font-medium">Active Deployments</span>
-        <h3 class="text-3xl font-extrabold text-white">24</h3>
-        <span class="text-xs text-emerald-400">● 100% Operational</span>
-      </div>
-      <div class="bg-gray-900 border border-slate-800 p-5 rounded-2xl space-y-2">
-        <span class="text-xs text-slate-400 font-medium">Monthly Bandwidth</span>
-        <h3 class="text-3xl font-extrabold text-white">1.2 TB</h3>
-        <span class="text-xs text-purple-400">48% of limit used</span>
-      </div>
-      <div class="bg-gray-900 border border-slate-800 p-5 rounded-2xl space-y-2">
-        <span class="text-xs text-slate-400 font-medium">Build Speed</span>
-        <h3 class="text-3xl font-extrabold text-white">18s</h3>
-        <span class="text-xs text-emerald-400">↑ 12% faster</span>
-      </div>
-    </div>
-
-    <div class="bg-gray-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-      <h3 class="font-bold text-white text-sm">Recent Activity</h3>
-      <div class="space-y-3 text-xs text-slate-400">
-        <div class="flex justify-between border-b border-slate-800/80 pb-2">
-          <span>Deploys <strong class="text-white">v2.4.1</strong> to production</span>
-          <span class="text-slate-500">2 mins ago</span>
-        </div>
-        <div class="flex justify-between border-b border-slate-800/80 pb-2">
-          <span>Updated environment variables for <strong class="text-white">API-Gateway</strong></span>
-          <span class="text-slate-500">1 hour ago</span>
-        </div>
-        <div class="flex justify-between">
-          <span>Added new team member <strong class="text-white">sarah@company.com</strong></span>
-          <span class="text-slate-500">3 hours ago</span>
+      <div class="hidden md:block mt-10 pt-4 border-t font-mono text-[11px]" style="border-color:var(--line); color:var(--sub)">
+        <div class="flex items-center space-x-2">
+          <span class="w-1.5 h-1.5 rounded-full status-dot" style="background:var(--teal)"></span>
+          <span>operational</span>
         </div>
       </div>
-    </div>
-  </main>
+    </aside>
 
-  <main id="tab-analytics" class="max-w-5xl mx-auto px-6 py-10 space-y-6 hidden">
-    <div class="border-b border-slate-800 pb-4">
-      <h1 class="text-2xl font-bold text-white">System Analytics</h1>
-      <p class="text-xs text-slate-400 mt-1">Traffic and response times over the past 30 days</p>
-    </div>
+    <!-- Content -->
+    <div class="flex-1 min-w-0">
 
-    <div class="bg-gray-900 border border-slate-800 p-6 rounded-2xl space-y-6">
-      <div class="flex justify-between items-center">
-        <h3 class="font-bold text-white text-sm">Request Volume</h3>
-        <button onclick="showToast('Data exported as CSV!')" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-1.5 rounded-lg text-white transition">
-          Export Report 📥
-        </button>
-      </div>
-      <div class="h-48 bg-gray-950 border border-slate-800 rounded-xl flex items-center justify-center text-xs text-slate-500">
-        [ Live Interactive Chart Component Area ]
-      </div>
-    </div>
-  </main>
+      <main id="tab-dashboard" class="px-6 md:px-10 py-10 space-y-6">
+        <div class="border-b pb-4" style="border-color:var(--line)">
+          <h1 class="font-display text-2xl font-bold">Project dashboard</h1>
+          <p class="text-xs mt-1" style="color:var(--sub)">Overview of your active workspace and deployments</p>
+        </div>
 
-  <main id="tab-team" class="max-w-5xl mx-auto px-6 py-10 space-y-6 hidden">
-    <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
-      <div>
-        <h1 class="text-2xl font-bold text-white">Team Workspace</h1>
-        <p class="text-xs text-slate-400 mt-1">Manage team roles and access permissions</p>
-      </div>
-      <button onclick="showToast('Invite link copied to clipboard!')" class="bg-purple-600 hover:bg-purple-500 text-xs font-semibold px-4 py-2 rounded-lg text-white transition">
-        + Invite Member
-      </button>
-    </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="panel p-5 rounded-lg space-y-1">
+            <span class="text-xs font-mono uppercase" style="color:var(--sub)">Active deployments</span>
+            <h3 class="text-3xl font-display font-bold">24</h3>
+            <span class="text-xs font-mono" style="color:var(--teal)">● 100% operational</span>
+          </div>
+          <div class="panel p-5 rounded-lg space-y-1">
+            <span class="text-xs font-mono uppercase" style="color:var(--sub)">Monthly bandwidth</span>
+            <h3 class="text-3xl font-display font-bold">1.2 TB</h3>
+            <span class="text-xs font-mono" style="color:var(--rust)">48% of limit used</span>
+          </div>
+          <div class="panel p-5 rounded-lg space-y-1">
+            <span class="text-xs font-mono uppercase" style="color:var(--sub)">Build speed</span>
+            <h3 class="text-3xl font-display font-bold">18s</h3>
+            <span class="text-xs font-mono" style="color:var(--teal)">↑ 12% faster</span>
+          </div>
+        </div>
 
-    <div class="bg-gray-900 border border-slate-800 rounded-2xl overflow-hidden">
-      <div class="p-4 border-b border-slate-800 bg-gray-950/50 flex justify-between text-xs font-semibold text-slate-400">
-        <span>Member</span>
-        <span>Role</span>
-      </div>
-      <div class="divide-y divide-slate-800 text-xs">
-        <div class="p-4 flex justify-between items-center">
-          <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold">A</div>
-            <div>
-              <p class="font-bold text-white">Alex Morgan</p>
-              <p class="text-slate-500 text-[11px]">alex@company.com</p>
+        <div class="panel p-6 rounded-lg space-y-4">
+          <h3 class="font-display font-bold text-sm">Recent activity</h3>
+          <div class="space-y-3 text-xs font-mono" style="color:var(--sub)">
+            <div class="flex justify-between border-b pb-2" style="border-color:var(--line)">
+              <span>Deploys <strong style="color:var(--ink)">v2.4.1</strong> to production</span>
+              <span>2 mins ago</span>
+            </div>
+            <div class="flex justify-between border-b pb-2" style="border-color:var(--line)">
+              <span>Updated environment variables for <strong style="color:var(--ink)">API-Gateway</strong></span>
+              <span>1 hour ago</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Added new team member <strong style="color:var(--ink)">sarah@company.com</strong></span>
+              <span>3 hours ago</span>
             </div>
           </div>
-          <span class="bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2.5 py-1 rounded-full font-semibold">Owner</span>
         </div>
-        <div class="p-4 flex justify-between items-center">
-          <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">S</div>
-            <div>
-              <p class="font-bold text-white">Sarah Jenkins</p>
-              <p class="text-slate-500 text-[11px]">sarah@company.com</p>
+      </main>
+
+      <main id="tab-analytics" class="px-6 md:px-10 py-10 space-y-6 hidden">
+        <div class="border-b pb-4" style="border-color:var(--line)">
+          <h1 class="font-display text-2xl font-bold">System analytics</h1>
+          <p class="text-xs mt-1" style="color:var(--sub)">Traffic and response times over the past 30 days</p>
+        </div>
+
+        <div class="panel p-6 rounded-lg space-y-6">
+          <div class="flex justify-between items-center">
+            <h3 class="font-display font-bold text-sm">Request volume</h3>
+            <button onclick="showToast('Data exported as CSV!')" class="text-xs px-3 py-1.5 rounded font-mono border transition" style="border-color:var(--line);">
+              export_report()
+            </button>
+          </div>
+          <div class="h-48 rounded flex items-center justify-center text-xs font-mono" style="background:var(--bg); border:1px dashed var(--line); color:var(--sub)">
+            [ live interactive chart component area ]
+          </div>
+        </div>
+      </main>
+
+      <main id="tab-team" class="px-6 md:px-10 py-10 space-y-6 hidden">
+        <div class="border-b pb-4 flex justify-between items-center" style="border-color:var(--line)">
+          <div>
+            <h1 class="font-display text-2xl font-bold">Team workspace</h1>
+            <p class="text-xs mt-1" style="color:var(--sub)">Manage team roles and access permissions</p>
+          </div>
+          <button onclick="showToast('Invite link copied to clipboard!')" class="text-xs font-semibold px-4 py-2 rounded text-white transition" style="background:var(--teal)">
+            + Invite member
+          </button>
+        </div>
+
+        <div class="panel rounded-lg overflow-hidden">
+          <div class="p-4 border-b flex justify-between text-xs font-mono uppercase" style="border-color:var(--line); color:var(--sub); background:var(--bg)">
+            <span>Member</span>
+            <span>Role</span>
+          </div>
+          <div class="divide-y text-xs" style="border-color:var(--line)">
+            <div class="p-4 flex justify-between items-center" style="border-color:var(--line)">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full text-white flex items-center justify-center font-display font-bold" style="background:var(--teal)">A</div>
+                <div>
+                  <p class="font-medium">Alex Morgan</p>
+                  <p class="font-mono text-[11px]" style="color:var(--sub)">alex@company.com</p>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-full font-mono font-semibold" style="background:#E4F2ED; color:var(--teal);">Owner</span>
+            </div>
+            <div class="p-4 flex justify-between items-center">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full text-white flex items-center justify-center font-display font-bold" style="background:var(--rust)">S</div>
+                <div>
+                  <p class="font-medium">Sarah Jenkins</p>
+                  <p class="font-mono text-[11px]" style="color:var(--sub)">sarah@company.com</p>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-full font-mono font-semibold" style="background:#F5E6DE; color:var(--rust);">Developer</span>
             </div>
           </div>
-          <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-full font-semibold">Developer</span>
         </div>
-      </div>
-    </div>
-  </main>
+      </main>
 
-  <main id="tab-settings" class="max-w-5xl mx-auto px-6 py-10 space-y-6 hidden">
-    <div class="border-b border-slate-800 pb-4">
-      <h1 class="text-2xl font-bold text-white">General Settings</h1>
-      <p class="text-xs text-slate-400 mt-1">Configure project settings and automated webhooks</p>
-    </div>
+      <main id="tab-settings" class="px-6 md:px-10 py-10 space-y-6 hidden">
+        <div class="border-b pb-4" style="border-color:var(--line)">
+          <h1 class="font-display text-2xl font-bold">General settings</h1>
+          <p class="text-xs mt-1" style="color:var(--sub)">Configure project settings and automated webhooks</p>
+        </div>
 
-    <div class="bg-gray-900 border border-slate-800 p-6 rounded-2xl space-y-4 max-w-xl">
-      <div>
-        <label class="block text-xs text-slate-400 mb-1">Project Name</label>
-        <input type="text" value="NexusPortal Core" class="w-full bg-gray-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-purple-500">
-      </div>
-      <div>
-        <label class="block text-xs text-slate-400 mb-1">Production Domain</label>
-        <input type="text" value="nexus-app.example.com" class="w-full bg-gray-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-purple-500">
-      </div>
-      <button onclick="showToast('Settings saved successfully!')" class="bg-purple-600 hover:bg-purple-500 text-xs font-semibold px-4 py-2.5 rounded-lg text-white transition">
-        Save Changes
-      </button>
-    </div>
-  </main>
+        <div class="panel p-6 rounded-lg space-y-4 max-w-xl">
+          <div>
+            <label class="block text-xs font-mono mb-1" style="color:var(--sub)">project_name</label>
+            <input type="text" value="NexusPortal Core" class="w-full rounded p-2.5 text-xs font-mono focus:outline-none border" style="background:var(--bg); border-color:var(--line);">
+          </div>
+          <div>
+            <label class="block text-xs font-mono mb-1" style="color:var(--sub)">production_domain</label>
+            <input type="text" value="nexus-app.example.com" class="w-full rounded p-2.5 text-xs font-mono focus:outline-none border" style="background:var(--bg); border-color:var(--line);">
+          </div>
+          <button onclick="showToast('Settings saved successfully!')" class="text-xs font-semibold px-4 py-2.5 rounded text-white transition" style="background:var(--teal)">
+            Save changes
+          </button>
+        </div>
+      </main>
 
-  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 border border-slate-800 text-white text-xs px-4 py-3 rounded-xl shadow-2xl hidden z-50"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 right-6 text-xs font-mono px-4 py-3 rounded hidden z-50 text-white" style="background:var(--ink)"></div>
 
   <script>
     const tabs = ['dashboard', 'analytics', 'team', 'settings'];
@@ -170,10 +206,12 @@
 
         if (tab === activeTab) {
           view.classList.remove('hidden');
-          btn.className = "px-4 py-1.5 text-xs font-semibold rounded-lg bg-purple-600 text-white transition";
+          btn.style.background = 'var(--teal)';
+          btn.style.color = 'white';
         } else {
           view.classList.add('hidden');
-          btn.className = "px-4 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition";
+          btn.style.background = 'transparent';
+          btn.style.color = 'var(--sub)';
         }
       });
     }

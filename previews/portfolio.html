@@ -1,107 +1,132 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Developer Portfolio Interactive Preview</title>
+  <title>alex.dev — Build Log</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#15130F;
+      --panel:#1C1912;
+      --ink:#EEE7D6;
+      --sub:#948C77;
+      --amber:#E8A33D;
+      --line:#2C2820;
+    }
+    body{ background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; }
+    .font-display{ font-family:'Space Grotesk', sans-serif; }
+    .font-mono{ font-family:'JetBrains Mono', monospace; }
+    .panel{ background:var(--panel); border:1px solid var(--line); }
+    .blink{ animation:blink 1.4s step-end infinite; }
+    @keyframes blink{ 50%{ opacity:0; } }
+  </style>
 </head>
-<body class="bg-gray-950 text-slate-100 font-sans min-h-screen pb-12">
+<body class="min-h-screen pb-16">
 
-  <nav class="max-w-5xl mx-auto px-6 py-6 flex justify-between items-center border-b border-slate-800">
-    <a href="#" class="font-extrabold text-lg tracking-tight text-white">alex<span class="text-blue-500">.dev</span></a>
-    
-    <div class="space-x-6 text-xs text-slate-400 font-medium">
-      <button onclick="scrollToSec('projects')" class="hover:text-white transition">Projects</button>
-      <button onclick="scrollToSec('about')" class="hover:text-white transition">About</button>
-      <button onclick="openContactModal()" class="hover:text-white transition">Contact</button>
+  <nav class="max-w-4xl mx-auto px-6 py-6 flex justify-between items-center border-b" style="border-color:var(--line)">
+    <a href="#" class="font-mono text-sm" style="color:var(--ink)">alex<span style="color:var(--amber)">.dev</span> <span class="text-xs" style="color:var(--sub)">— v3.2.0</span></a>
+
+    <div class="space-x-6 text-xs font-mono" style="color:var(--sub)">
+      <button onclick="scrollToSec('projects')" class="hover:text-[var(--ink)] transition">./projects</button>
+      <button onclick="scrollToSec('about')" class="hover:text-[var(--ink)] transition">./about</button>
+      <button onclick="openContactModal()" class="hover:text-[var(--ink)] transition">./contact</button>
     </div>
   </nav>
 
-  <header class="max-w-5xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-8">
-    <div class="space-y-4 max-w-xl text-center md:text-left">
-      <div class="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full text-xs text-slate-300">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span>Available for hiring</span>
+  <header class="max-w-4xl mx-auto px-6 py-14 flex flex-col md:flex-row items-start justify-between gap-8">
+    <div class="space-y-4 max-w-xl">
+      <div class="inline-flex items-center space-x-2 font-mono text-xs" style="color:var(--sub)">
+        <span class="w-1.5 h-1.5 rounded-full blink" style="background:var(--amber)"></span>
+        <span>status: available for hire</span>
       </div>
-      
-      <h1 class="text-3xl md:text-5xl font-black text-white leading-tight">Full-Stack Engineer & UI Architect.</h1>
-      <p class="text-slate-400 text-xs md:text-sm">Building fast web applications, clean UI design systems, and robust REST APIs.</p>
-      
-      <div class="flex flex-wrap gap-2 pt-2 justify-center md:justify-start">
-        <button onclick="filterProjects('all')" class="bg-blue-600 text-xs px-3 py-1 rounded-lg text-white font-medium">All Stack</button>
-        <button onclick="filterProjects('react')" class="bg-gray-900 border border-slate-800 hover:border-slate-700 text-xs px-3 py-1 rounded-lg text-slate-300">React / Next.js</button>
-        <button onclick="filterProjects('node')" class="bg-gray-900 border border-slate-800 hover:border-slate-700 text-xs px-3 py-1 rounded-lg text-slate-300">Node.js</button>
+
+      <h1 class="font-display text-3xl md:text-5xl font-bold text-white leading-[1.1]">Full-stack engineer & UI architect.</h1>
+      <p class="text-sm max-w-md" style="color:var(--sub)">Building fast web applications, clean UI design systems, and robust REST APIs.</p>
+
+      <div class="flex flex-wrap gap-2 pt-2 font-mono text-xs">
+        <button onclick="filterProjects('all')" class="px-3 py-1.5 rounded" style="background:var(--amber); color:var(--bg); font-weight:600;">all_stack</button>
+        <button onclick="filterProjects('react')" class="px-3 py-1.5 rounded border" style="border-color:var(--line); color:var(--ink);">react/next</button>
+        <button onclick="filterProjects('node')" class="px-3 py-1.5 rounded border" style="border-color:var(--line); color:var(--ink);">node.js</button>
       </div>
     </div>
 
-    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" class="w-36 h-36 rounded-2xl object-cover border-2 border-slate-800 shadow-2xl">
+    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" class="w-32 h-32 rounded object-cover" style="border:1px solid var(--line); filter:grayscale(35%) contrast(1.05);">
   </header>
 
-  <section id="projects" class="max-w-5xl mx-auto px-6 py-6 space-y-6">
-    <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
-      <h2 class="text-xl font-bold text-white">Featured Work</h2>
-      <span id="project-count" class="text-xs text-slate-500">Showing 3 projects</span>
+  <section id="projects" class="max-w-4xl mx-auto px-6 py-6 space-y-6">
+    <div class="border-b pb-3 flex justify-between items-baseline font-mono" style="border-color:var(--line)">
+      <h2 class="text-lg font-display font-bold text-white">Build log</h2>
+      <span id="project-count" class="text-xs" style="color:var(--sub)">showing 3 entries</span>
     </div>
 
-    <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      </div>
+    <div id="projects-container" class="space-y-4">
+    </div>
   </section>
 
-  <section id="about" class="max-w-5xl mx-auto px-6 py-10">
-    <div class="bg-gray-900 border border-slate-800 p-6 rounded-2xl space-y-3">
-      <h3 class="font-bold text-white text-base">About Alex</h3>
-      <p class="text-xs text-slate-400 leading-relaxed">
+  <section id="about" class="max-w-4xl mx-auto px-6 py-10">
+    <div class="panel rounded-lg p-6 space-y-3">
+      <p class="font-mono text-xs" style="color:var(--amber)"># about</p>
+      <h3 class="font-display font-bold text-white text-base">Alex Morgan</h3>
+      <p class="text-xs leading-relaxed" style="color:var(--sub)">
         5+ years of software engineering experience shipping digital products. Skilled in modern JavaScript frameworks, performant database architectures, and intuitive UI components.
       </p>
-      <button onclick="openContactModal()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-4 py-2 rounded-lg font-semibold transition">
-        Send Message ✉️
+      <button onclick="openContactModal()" class="font-mono text-xs px-4 py-2 rounded transition" style="background:var(--amber); color:var(--bg); font-weight:600;">
+        send_message()
       </button>
     </div>
   </section>
 
-  <div id="contact-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-gray-900 border border-slate-800 p-6 rounded-2xl max-w-md w-full space-y-4 relative shadow-2xl">
-      <button onclick="closeContactModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
-      <h3 class="text-lg font-bold text-white">Get In Touch</h3>
-      
+  <div id="contact-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="panel rounded-lg p-6 max-w-md w-full space-y-4 relative">
+      <button onclick="closeContactModal()" class="absolute top-4 right-4 font-mono text-xs" style="color:var(--sub)">✕</button>
+      <h3 class="font-display text-lg font-bold text-white">Get in touch</h3>
+
       <form onsubmit="handleContactSubmit(event)" class="space-y-3">
         <div>
-          <label class="block text-xs text-slate-400 mb-1">Your Name</label>
-          <input type="text" required placeholder="Sarah Jenkins" class="w-full bg-gray-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+          <label class="block text-xs font-mono mb-1" style="color:var(--sub)">name</label>
+          <input type="text" required placeholder="Sarah Jenkins" class="w-full rounded p-2.5 text-xs font-mono focus:outline-none border" style="background:var(--bg); border-color:var(--line); color:var(--ink);">
         </div>
         <div>
-          <label class="block text-xs text-slate-400 mb-1">Message</label>
-          <textarea rows="3" required placeholder="Hey Alex, let's collaborate..." class="w-full bg-gray-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-blue-500"></textarea>
+          <label class="block text-xs font-mono mb-1" style="color:var(--sub)">message</label>
+          <textarea rows="3" required placeholder="Hey Alex, let's collaborate..." class="w-full rounded p-2.5 text-xs font-mono focus:outline-none border" style="background:var(--bg); border-color:var(--line); color:var(--ink);"></textarea>
         </div>
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold py-2.5 rounded-lg transition">
-          Send Email
+        <button type="submit" class="w-full font-mono text-xs font-semibold py-2.5 rounded transition" style="background:var(--amber); color:var(--bg);">
+          send_email()
         </button>
       </form>
     </div>
   </div>
 
-  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 border border-slate-800 text-white text-xs px-4 py-3 rounded-xl shadow-2xl hidden z-50"></div>
+  <div id="toast" class="fixed bottom-6 right-6 text-xs font-mono px-4 py-3 rounded hidden z-50" style="background:var(--panel); color:var(--ink); border:1px solid var(--line);"></div>
 
   <script>
     const projectList = [
-      { id: 1, title: "Apex Financial Terminal", tag: "react", desc: "Real-time crypto and stock analytics built with Next.js and WebSockets.", image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600" },
-      { id: 2, title: "Cognitive Workspace", tag: "react", desc: "AI document editor with collaborative multi-user editing.", image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600" },
-      { id: 3, title: "High-Speed Microservice API", tag: "node", desc: "Node.js and Redis cache layer handling 50k requests per second.", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600" }
+      { id: 1, version: "v1.2", title: "Apex Financial Terminal", tag: "react", desc: "Real-time crypto and stock analytics built with Next.js and WebSockets.", shipped: "2024", image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600" },
+      { id: 2, version: "v1.1", title: "Cognitive Workspace", tag: "react", desc: "AI document editor with collaborative multi-user editing.", shipped: "2023", image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600" },
+      { id: 3, version: "v1.0", title: "High-Speed Microservice API", tag: "node", desc: "Node.js and Redis cache layer handling 50k requests per second.", shipped: "2023", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600" }
     ];
 
     function renderProjects(items) {
       const container = document.getElementById('projects-container');
-      document.getElementById('project-count').textContent = `Showing ${items.length} projects`;
+      document.getElementById('project-count').textContent = `showing ${items.length} entries`;
 
       container.innerHTML = items.map(p => `
-        <div class="bg-gray-900 border border-slate-800 rounded-2xl p-4 space-y-3 hover:border-slate-700 transition">
-          <img src="${p.image}" class="w-full h-40 object-cover rounded-xl border border-slate-800">
-          <h3 class="font-bold text-white text-base">${p.title}</h3>
-          <p class="text-xs text-slate-400">${p.desc}</p>
-          <div class="flex space-x-2 pt-1">
-            <button onclick="showToast('Opening live demo for ${p.title}...')" class="bg-slate-800 hover:bg-slate-700 text-xs text-white px-3 py-1.5 rounded-lg transition">Demo ↗</button>
-            <button onclick="showToast('GitHub repo link copied!')" class="text-xs text-slate-400 hover:text-white px-3 py-1.5 transition">Source</button>
+        <div class="panel rounded-lg p-5 flex flex-col md:flex-row gap-5">
+          <img src="${p.image}" class="w-full md:w-40 h-32 object-cover rounded" style="filter:grayscale(30%)">
+          <div class="flex-1 space-y-2">
+            <div class="flex items-center gap-2 font-mono text-[11px]">
+              <span class="px-2 py-0.5 rounded" style="background:var(--bg); color:var(--amber); border:1px solid var(--line);">${p.version}</span>
+              <span style="color:var(--sub)">shipped ${p.shipped}</span>
+            </div>
+            <h3 class="font-display font-bold text-white text-base">${p.title}</h3>
+            <p class="text-xs" style="color:var(--sub)">${p.desc}</p>
+            <div class="flex space-x-4 pt-1 font-mono text-xs">
+              <button onclick="showToast('Opening live demo for ${p.title}...')" class="hover:text-[var(--amber)] transition" style="color:var(--ink)">demo ↗</button>
+              <button onclick="showToast('GitHub repo link copied!')" class="hover:text-[var(--amber)] transition" style="color:var(--sub)">source</button>
+            </div>
           </div>
         </div>
       `).join('');

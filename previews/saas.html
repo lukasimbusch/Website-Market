@@ -1,97 +1,152 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SaaS Rocket Interactive Preview</title>
+  <title>RocketFlow — Console</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#EEF0EA;
+      --panel:#FFFFFF;
+      --ink:#12151A;
+      --sub:#5B6058;
+      --indigo:#3B44E8;
+      --amber:#D98A1F;
+      --line:#D7DACF;
+    }
+    body{
+      background-color:var(--bg);
+      background-image: radial-gradient(circle, #D2D5C8 1px, transparent 1px);
+      background-size: 20px 20px;
+      color:var(--ink);
+      font-family:'Inter',sans-serif;
+    }
+    .font-display{ font-family:'Space Grotesk', sans-serif; }
+    .font-mono{ font-family:'JetBrains Mono', monospace; }
+    .panel{ background:var(--panel); border:1px solid var(--line); }
+    .pulse-dot{ box-shadow:0 0 0 0 rgba(59,68,232,0.5); animation:pulse 2s infinite; }
+    @keyframes pulse{
+      0%{ box-shadow:0 0 0 0 rgba(59,68,232,0.45); }
+      70%{ box-shadow:0 0 0 6px rgba(59,68,232,0); }
+      100%{ box-shadow:0 0 0 0 rgba(59,68,232,0); }
+    }
+  </style>
 </head>
-<body class="bg-gray-950 text-slate-100 font-sans min-h-screen relative pb-12">
+<body class="min-h-screen pb-16">
 
-  <header class="border-b border-slate-800 bg-gray-900/80 backdrop-blur-md sticky top-0 z-20">
+  <header class="border-b sticky top-0 z-20" style="border-color:var(--line); background:rgba(238,240,234,0.92); backdrop-filter:blur(6px);">
     <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-2 cursor-pointer" onclick="showToast('RocketFlow Dashboard v2.0')">
-        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">🚀</div>
-        <span class="font-extrabold text-lg text-white">RocketFlow</span>
+      <div class="flex items-center space-x-2 cursor-pointer" onclick="showToast('RocketFlow Console — build 2.0.4')">
+        <div class="w-7 h-7 rounded flex items-center justify-center font-mono text-xs font-bold text-white" style="background:var(--indigo)">RF</div>
+        <span class="font-display font-bold text-lg tracking-tight">RocketFlow</span>
       </div>
 
-      <nav class="hidden md:flex space-x-6 text-xs text-slate-400 font-medium">
-        <button onclick="scrollToSection('hero')" class="hover:text-white transition">Overview</button>
-        <button onclick="scrollToSection('analytics')" class="hover:text-white transition">Analytics</button>
-        <button onclick="scrollToSection('pricing')" class="hover:text-white transition">Pricing</button>
+      <nav class="hidden md:flex space-x-6 text-xs font-mono uppercase tracking-wide" style="color:var(--sub)">
+        <button onclick="scrollToSection('hero')" class="hover:text-[var(--ink)] transition">Overview</button>
+        <button onclick="scrollToSection('analytics')" class="hover:text-[var(--ink)] transition">Analytics</button>
+        <button onclick="scrollToSection('pricing')" class="hover:text-[var(--ink)] transition">Pricing</button>
       </nav>
 
-      <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-4 py-2 rounded-lg font-semibold transition shadow-lg shadow-blue-600/20">
-        Start Free Trial
+      <button onclick="openModal()" class="text-white text-xs font-mono px-4 py-2 rounded transition" style="background:var(--ink)">
+        Start_trial()
       </button>
     </div>
   </header>
 
-  <section id="hero" class="max-w-5xl mx-auto px-6 py-16 text-center space-y-6">
-    <button onclick="showToast('System updated to v2.0.4!')" class="inline-block px-3 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full text-xs font-semibold hover:bg-blue-500/20 transition">
-      ✨ Version 2.0 Released — What's New?
-    </button>
-    
-    <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight leading-tight">
-      Scale Your Analytics <br/><span class="text-blue-500">Without Limits.</span>
-    </h1>
-    
-    <p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
-      Automate your data pipeline with real-time monitoring, custom alert triggers, and seamless developer APIs.
-    </p>
-    
-    <div class="flex justify-center space-x-4 pt-2">
-      <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-6 py-3 rounded-xl font-semibold transition shadow-lg shadow-blue-500/20">
-        Get Started Free
+  <div class="border-b" style="border-color:var(--line); background:var(--panel);">
+    <div class="max-w-6xl mx-auto px-6 py-2 flex items-center space-x-2 font-mono text-[11px]" style="color:var(--sub)">
+      <span class="w-1.5 h-1.5 rounded-full pulse-dot" style="background:var(--indigo)"></span>
+      <span>ALL SYSTEMS OPERATIONAL</span>
+      <span class="opacity-40">·</span>
+      <span>128 nodes reporting</span>
+      <span class="opacity-40">·</span>
+      <span>last sync 4s ago</span>
+    </div>
+  </div>
+
+  <section id="hero" class="max-w-5xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+    <div class="md:col-span-7 space-y-5">
+      <button onclick="showToast('System updated to v2.0.4!')" class="inline-block px-3 py-1 font-mono text-[11px] rounded border" style="border-color:var(--line); color:var(--indigo); background:var(--panel);">
+        v2.0.4 — changelog →
       </button>
-      <button onclick="toggleDemoVideo()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm px-6 py-3 rounded-xl font-semibold transition border border-slate-700 flex items-center space-x-2">
-        <span>▶ Watch Demo</span>
-      </button>
+      <h1 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-[1.08]">
+        Scale your analytics<br/>without limits.
+      </h1>
+      <p class="text-sm max-w-lg" style="color:var(--sub)">
+        Automate your data pipeline with real-time monitoring, custom alert triggers, and seamless developer APIs.
+      </p>
+      <div class="flex space-x-3 pt-1">
+        <button onclick="openModal()" class="text-white text-sm px-5 py-2.5 rounded font-medium transition" style="background:var(--indigo)">
+          Get started free
+        </button>
+        <button onclick="toggleDemoVideo()" class="text-sm px-5 py-2.5 rounded font-medium border transition" style="border-color:var(--line); color:var(--ink);">
+          ▶ Watch demo
+        </button>
+      </div>
+    </div>
+
+    <div class="md:col-span-5 panel rounded-lg p-5 font-mono text-xs space-y-2">
+      <p class="text-[10px] uppercase tracking-widest mb-2" style="color:var(--sub)">Live readout</p>
+      <div class="flex justify-between"><span style="color:var(--sub)">req/sec</span><span class="font-semibold" id="readout-rps">18,204</span></div>
+      <div class="flex justify-between"><span style="color:var(--sub)">p99 latency</span><span class="font-semibold" style="color:var(--amber)">24ms</span></div>
+      <div class="flex justify-between"><span style="color:var(--sub)">error rate</span><span class="font-semibold" style="color:var(--indigo)">0.02%</span></div>
+      <div class="h-16 mt-3 rounded flex items-end space-x-1 px-1" style="background:var(--bg)">
+        <div class="w-full rounded-sm" style="height:40%; background:var(--indigo)"></div>
+        <div class="w-full rounded-sm" style="height:65%; background:var(--indigo)"></div>
+        <div class="w-full rounded-sm" style="height:50%; background:var(--indigo)"></div>
+        <div class="w-full rounded-sm" style="height:80%; background:var(--indigo)"></div>
+        <div class="w-full rounded-sm" style="height:58%; background:var(--indigo)"></div>
+        <div class="w-full rounded-sm" style="height:72%; background:var(--amber)"></div>
+        <div class="w-full rounded-sm" style="height:45%; background:var(--indigo)"></div>
+      </div>
     </div>
   </section>
 
   <div id="demo-video-container" class="hidden max-w-4xl mx-auto px-6 mb-12">
-    <div class="bg-gray-900 border border-slate-800 rounded-2xl p-8 text-center space-y-4 shadow-2xl relative">
-      <button onclick="toggleDemoVideo()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold">✕</button>
-      <div class="w-16 h-16 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center mx-auto text-2xl border border-blue-500/20">🎥</div>
-      <h3 class="font-bold text-white text-lg">Product Walkthrough (1:45)</h3>
-      <p class="text-xs text-slate-400 max-w-md mx-auto">Learn how RocketFlow aggregates multi-cloud metric streams into unified real-time dashboards.</p>
+    <div class="panel rounded-lg p-8 text-center space-y-4 relative">
+      <button onclick="toggleDemoVideo()" class="absolute top-4 right-4 font-mono text-xs" style="color:var(--sub)">close ✕</button>
+      <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto text-xl" style="background:var(--bg); color:var(--indigo)">▶</div>
+      <h3 class="font-display font-bold text-lg">Product walkthrough (1:45)</h3>
+      <p class="text-xs max-w-md mx-auto" style="color:var(--sub)">How RocketFlow aggregates multi-cloud metric streams into unified real-time dashboards.</p>
     </div>
   </div>
 
   <section id="analytics" class="max-w-5xl mx-auto px-6 pb-12">
-    <div class="bg-gray-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
-      
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+    <div class="panel rounded-lg p-6 space-y-6">
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4" style="border-color:var(--line)">
         <div>
-          <h2 class="font-bold text-white text-sm">Live System Performance</h2>
-          <p class="text-xs text-slate-400">Switch timeframe filter to update metric outputs</p>
+          <h2 class="font-display font-bold text-sm">Live system performance</h2>
+          <p class="text-xs" style="color:var(--sub)">Switch timeframe filter to update metric outputs</p>
         </div>
 
-        <div class="flex items-center space-x-2 bg-gray-950 p-1 rounded-lg border border-slate-800 self-start sm:self-auto">
-          <button id="btn-24h" onclick="updateTimeframe('24h')" class="px-3 py-1 text-xs rounded font-medium bg-blue-600 text-white">24 Hours</button>
-          <button id="btn-7d" onclick="updateTimeframe('7d')" class="px-3 py-1 text-xs rounded font-medium text-slate-400 hover:text-white">7 Days</button>
-          <button id="btn-30d" onclick="updateTimeframe('30d')" class="px-3 py-1 text-xs rounded font-medium text-slate-400 hover:text-white">30 Days</button>
+        <div class="flex items-center space-x-1 p-1 rounded border" style="border-color:var(--line); background:var(--bg)">
+          <button id="btn-24h" onclick="updateTimeframe('24h')" class="px-3 py-1 text-xs font-mono rounded text-white" style="background:var(--indigo)">24H</button>
+          <button id="btn-7d" onclick="updateTimeframe('7d')" class="px-3 py-1 text-xs font-mono rounded" style="color:var(--sub)">7D</button>
+          <button id="btn-30d" onclick="updateTimeframe('30d')" class="px-3 py-1 text-xs font-mono rounded" style="color:var(--sub)">30D</button>
         </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="bg-gray-950 p-4 rounded-xl border border-slate-800 transition">
-          <p class="text-xs text-slate-400">Total API Calls</p>
-          <p id="stat-calls" class="text-2xl font-bold text-white mt-1">1,482,910</p>
-          <span id="stat-calls-change" class="text-xs text-emerald-400">↑ +14.2%</span>
-        </div>
-        
-        <div class="bg-gray-950 p-4 rounded-xl border border-slate-800 transition">
-          <p class="text-xs text-slate-400">Average Latency</p>
-          <p id="stat-latency" class="text-2xl font-bold text-white mt-1">24ms</p>
-          <span class="text-xs text-emerald-400">↓ -3ms optimal</span>
+        <div class="p-4 rounded border" style="border-color:var(--line); background:var(--bg)">
+          <p class="text-xs font-mono uppercase" style="color:var(--sub)">Total API calls</p>
+          <p id="stat-calls" class="font-mono text-2xl font-bold mt-1">1,482,910</p>
+          <span id="stat-calls-change" class="text-xs font-mono" style="color:var(--indigo)">↑ +14.2%</span>
         </div>
 
-        <div class="bg-gray-950 p-4 rounded-xl border border-slate-800 transition">
-          <p class="text-xs text-slate-400">Active Node Clusters</p>
-          <p id="stat-clusters" class="text-2xl font-bold text-white mt-1">128 Nodes</p>
-          <span class="text-xs text-blue-400">99.99% Uptime</span>
+        <div class="p-4 rounded border" style="border-color:var(--line); background:var(--bg)">
+          <p class="text-xs font-mono uppercase" style="color:var(--sub)">Average latency</p>
+          <p id="stat-latency" class="font-mono text-2xl font-bold mt-1">24ms</p>
+          <span class="text-xs font-mono" style="color:var(--amber)">↓ -3ms optimal</span>
+        </div>
+
+        <div class="p-4 rounded border" style="border-color:var(--line); background:var(--bg)">
+          <p class="text-xs font-mono uppercase" style="color:var(--sub)">Active node clusters</p>
+          <p id="stat-clusters" class="font-mono text-2xl font-bold mt-1">128 nodes</p>
+          <span class="text-xs font-mono" style="color:var(--indigo)">99.99% uptime</span>
         </div>
       </div>
 
@@ -99,60 +154,60 @@
   </section>
 
   <section id="pricing" class="max-w-5xl mx-auto px-6 py-8">
-    <div class="text-center mb-8">
-      <h2 class="text-2xl font-bold text-white">Simple, Transparent Pricing</h2>
-      <p class="text-xs text-slate-400 mt-1">Choose the plan that fits your growth</p>
+    <div class="mb-8">
+      <h2 class="font-display text-2xl font-bold">Simple, transparent pricing</h2>
+      <p class="text-xs mt-1" style="color:var(--sub)">Choose the plan that fits your growth</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-      <div class="bg-gray-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-        <h3 class="font-bold text-white">Starter Plan</h3>
-        <p class="text-3xl font-extrabold text-white">$29 <span class="text-xs font-normal text-slate-400">/ mo</span></p>
-        <ul class="text-xs text-slate-400 space-y-2">
-          <li>✓ Up to 500,000 API calls</li>
-          <li>✓ 3 Team Seats</li>
-          <li>✓ Standard Email Support</li>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+      <div class="panel rounded-lg p-6 space-y-4">
+        <h3 class="font-display font-bold">Starter plan</h3>
+        <p class="font-mono text-3xl font-bold">$29<span class="text-xs font-normal" style="color:var(--sub)"> /mo</span></p>
+        <ul class="text-xs space-y-2 font-mono" style="color:var(--sub)">
+          <li>&gt; up to 500,000 API calls</li>
+          <li>&gt; 3 team seats</li>
+          <li>&gt; standard email support</li>
         </ul>
-        <button onclick="selectPlan('Starter')" class="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs py-2.5 rounded-xl font-medium transition">
-          Select Starter
+        <button onclick="selectPlan('Starter')" class="w-full text-xs py-2.5 rounded font-mono border transition" style="border-color:var(--line);">
+          select_starter()
         </button>
       </div>
 
-      <div class="bg-gray-900 border border-blue-500/50 p-6 rounded-2xl space-y-4 relative overflow-hidden shadow-xl shadow-blue-500/5">
-        <span class="absolute top-3 right-3 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Popular</span>
-        <h3 class="font-bold text-white">Pro Scale</h3>
-        <p class="text-3xl font-extrabold text-white">$89 <span class="text-xs font-normal text-slate-400">/ mo</span></p>
-        <ul class="text-xs text-slate-400 space-y-2">
-          <li>✓ Unlimited API calls</li>
-          <li>✓ Unlimited Seats</li>
-          <li>✓ Dedicated 24/7 Slack Channel</li>
+      <div class="rounded-lg p-6 space-y-4 relative" style="background:var(--ink); color:white;">
+        <span class="absolute top-4 right-4 font-mono text-[10px] uppercase px-2 py-0.5 rounded" style="background:var(--amber); color:var(--ink);">Popular</span>
+        <h3 class="font-display font-bold">Pro Scale</h3>
+        <p class="font-mono text-3xl font-bold">$89<span class="text-xs font-normal opacity-60"> /mo</span></p>
+        <ul class="text-xs space-y-2 font-mono opacity-80">
+          <li>&gt; unlimited API calls</li>
+          <li>&gt; unlimited seats</li>
+          <li>&gt; dedicated 24/7 Slack channel</li>
         </ul>
-        <button onclick="selectPlan('Pro Scale')" class="w-full bg-blue-600 hover:bg-blue-500 text-white text-xs py-2.5 rounded-xl font-semibold transition shadow-lg shadow-blue-600/20">
-          Select Pro Scale
+        <button onclick="selectPlan('Pro Scale')" class="w-full text-xs py-2.5 rounded font-mono font-semibold transition" style="background:var(--indigo); color:white;">
+          select_pro_scale()
         </button>
       </div>
     </div>
   </section>
 
-  <div id="trial-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-gray-900 border border-slate-800 p-6 rounded-2xl max-w-md w-full space-y-4 relative shadow-2xl">
-      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
-      <h3 class="text-xl font-bold text-white">Start 14-Day Free Trial</h3>
-      <p class="text-xs text-slate-400">No credit card required. Instant access.</p>
-      
+  <div id="trial-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="panel rounded-lg p-6 max-w-md w-full space-y-4 relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 font-mono text-xs" style="color:var(--sub)">✕</button>
+      <h3 class="font-display text-xl font-bold">Start 14-day free trial</h3>
+      <p class="text-xs" style="color:var(--sub)">No credit card required. Instant access.</p>
+
       <form onsubmit="handleTrialSubmit(event)" class="space-y-3">
         <div>
-          <label class="block text-xs text-slate-400 mb-1">Work Email</label>
-          <input type="email" id="trial-email" required placeholder="alex@company.com" class="w-full bg-gray-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+          <label class="block text-xs font-mono mb-1" style="color:var(--sub)">work_email</label>
+          <input type="email" id="trial-email" required placeholder="alex@company.com" class="w-full rounded p-2.5 text-xs font-mono focus:outline-none border" style="background:var(--bg); border-color:var(--line);">
         </div>
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold py-2.5 rounded-lg transition">
-          Create Free Account
+        <button type="submit" class="w-full text-white text-xs font-mono font-semibold py-2.5 rounded transition" style="background:var(--indigo)">
+          create_account()
         </button>
       </form>
     </div>
   </div>
 
-  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 border border-slate-800 text-white text-xs px-4 py-3 rounded-xl shadow-2xl hidden transition-all duration-300 z-50"></div>
+  <div id="toast" class="fixed bottom-6 right-6 text-white text-xs font-mono px-4 py-3 rounded hidden transition-all duration-300 z-50" style="background:var(--ink)"></div>
 
   <script>
     function showToast(msg) {
@@ -162,29 +217,23 @@
       setTimeout(() => toast.classList.add('hidden'), 2500);
     }
 
-    function openModal() {
-      document.getElementById('trial-modal').classList.remove('hidden');
-    }
-
-    function closeModal() {
-      document.getElementById('trial-modal').classList.add('hidden');
-    }
+    function openModal() { document.getElementById('trial-modal').classList.remove('hidden'); }
+    function closeModal() { document.getElementById('trial-modal').classList.add('hidden'); }
 
     function handleTrialSubmit(e) {
       e.preventDefault();
       const email = document.getElementById('trial-email').value;
       closeModal();
-      showToast(`Trial account created for ${email}! Check your inbox.`);
+      showToast(`Trial account created for ${email}`);
       document.getElementById('trial-email').value = '';
     }
 
     function toggleDemoVideo() {
-      const container = document.getElementById('demo-video-container');
-      container.classList.toggle('hidden');
+      document.getElementById('demo-video-container').classList.toggle('hidden');
     }
 
     function selectPlan(planName) {
-      showToast(`Selected ${planName} Plan. Redirecting to checkout...`);
+      showToast(`Selected ${planName} plan — redirecting to checkout`);
     }
 
     function scrollToSection(id) {
@@ -196,26 +245,33 @@
       const btn7 = document.getElementById('btn-7d');
       const btn30 = document.getElementById('btn-30d');
 
-      [btn24, btn7, btn30].forEach(b => b.className = "px-3 py-1 text-xs rounded font-medium text-slate-400 hover:text-white");
+      [btn24, btn7, btn30].forEach(b => {
+        b.className = "px-3 py-1 text-xs font-mono rounded";
+        b.style.color = 'var(--sub)';
+        b.style.background = 'transparent';
+      });
 
       if (range === '24h') {
-        btn24.className = "px-3 py-1 text-xs rounded font-medium bg-blue-600 text-white";
+        btn24.className = "px-3 py-1 text-xs font-mono rounded text-white";
+        btn24.style.background = 'var(--indigo)';
         document.getElementById('stat-calls').textContent = '1,482,910';
         document.getElementById('stat-calls-change').textContent = '↑ +14.2%';
         document.getElementById('stat-latency').textContent = '24ms';
-        document.getElementById('stat-clusters').textContent = '128 Nodes';
+        document.getElementById('stat-clusters').textContent = '128 nodes';
       } else if (range === '7d') {
-        btn7.className = "px-3 py-1 text-xs rounded font-medium bg-blue-600 text-white";
+        btn7.className = "px-3 py-1 text-xs font-mono rounded text-white";
+        btn7.style.background = 'var(--indigo)';
         document.getElementById('stat-calls').textContent = '9,842,100';
         document.getElementById('stat-calls-change').textContent = '↑ +22.8%';
         document.getElementById('stat-latency').textContent = '28ms';
-        document.getElementById('stat-clusters').textContent = '140 Nodes';
+        document.getElementById('stat-clusters').textContent = '140 nodes';
       } else if (range === '30d') {
-        btn30.className = "px-3 py-1 text-xs rounded font-medium bg-blue-600 text-white";
+        btn30.className = "px-3 py-1 text-xs font-mono rounded text-white";
+        btn30.style.background = 'var(--indigo)';
         document.getElementById('stat-calls').textContent = '42,190,400';
         document.getElementById('stat-calls-change').textContent = '↑ +31.5%';
         document.getElementById('stat-latency').textContent = '22ms';
-        document.getElementById('stat-clusters').textContent = '180 Nodes';
+        document.getElementById('stat-clusters').textContent = '180 nodes';
       }
     }
   </script>
